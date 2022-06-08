@@ -1,42 +1,107 @@
 const baslik=document.querySelector('#baslk')
 
-baslik.style.color='pink'
+baslik.style.color='red'
 baslik.style.textAlign='center'
 
 
-const resim1=document.querySelector('.resim')
-resim1.onmouseover=()=>{
-resim1.src='./img/aslan1.jpeg'
-}
-resim1.onmouseout=()=>{
-    resim1.src='./img/aslan2.jpeg'
+let resim=document.querySelector(".resim");
+let ses=document.querySelector(".ses");
+
+document.querySelector(".on").onclick=()=>{
+resim.src="./img/img.gif"
+
+ses.play();
+
+//sesin volume nü 0-1 arasında değer vererek ayarlayabiliriz
+ses.volume='0.1'}
+
+document.querySelector(".off").onclick=()=>{
+
+ resim.src="./img/telbagla.gif"
+ ses.pause();
 }
 
-const bagla=document.querySelector('.btn-outline-primary')
-bagla.style.color='Blue'
-bagla.style.backgroundColor='White'
-bagla.style.border='1px solid'
-bagla.onclick=()=>{
-    resim1.src='./img/telbagla.gif'
+document.querySelector(".speak").onclick = () => {
+  resim.src = "./img/telefon.gif";
+  ses.pause();
+};
+
+resim.onmouseover=()=>{
+ resim.src="./img/aslan1.jpeg"
+}
+// 2.Yol
+resim.addEventListener("mouseout", () => {
+  resim.src = "./img/aslan2.jpeg";
+});
+
+const check=  document.querySelector(".checkbox");
+
+const text= document.querySelector(".textbox");
+
+text.onkeyup=()=>{
+ if(check.checked)
+ {    text.value=text.value.toUpperCase()
+ 
+ }else{
+    text.value=text.value.toLowerCase()
+ }
 }
 
-const konus=document.querySelector('.btn-outline-danger')
-konus.style.color='Red'
-konus.style.backgroundColor='white'
-konus.style.border='1px solid'
-konus.onclick=()=>{
-    resim1.src='./img/telefon.gif'
-}
-const arama= document.querySelector('.btn-outline-warning')
-arama.style.color='Orange'
-arama.style.backgroundColor='white'
-arama.style.border='1px solid'
+//*ekle butonuna basıldığında inputa girilen değerler benim ul listeme eklensin
 
-const sess=document.querySelector('.ses')
-arama.onclick=()=>{
-    sess.play()
+document.querySelector(".ekle").onclick=()=>{
+  const liste = document.querySelector(".liste");
+  const language = document.querySelector(".language");
+
+  liste.innerHTML = liste.innerHTML + `<li>${language.value} </li>`;
+
+  //*input girişi yapılıp eleman üstte listeye eklendikten sonra input temizlensin
+  language.value = "";
+
+//*UZUN YOL
+  // yeni girilen satiri saklamak icin bir li olusturduk.
+  // const yeniLi = document.createElement("li");
+  // yeni li icin textnode olusturduk
+  // const textNode = document.createTextNode(satir.value);
+  //olusturdugumuz texnode'u yeni li'ye bagladik.
+  // yeniLi.appendChild(textNode);
+  // yeni eklenen satiri var olan listeye (ul) baglayalim.
+  // liste.appendChild(yeniLi);
+}
+
+//*!sil butonu tıklandığında
+
+document.querySelector(".sil").onclick = ()=>{
+const liste = document.querySelector(".liste");
+
+liste.removeChild(liste.lastElementChild);//*listenin son elemanını sil
+// liste.removeChild(liste.firstElementChild);//*listenin ilk elemanını sil
 
 }
-arama.ondblclick=()=>{
-    sess.pause()
+
+//! key kodlari kullanilarak kod yazma
+document.querySelector(".language").onkeydown=(tuslar)=>{
+  console.log(tuslar);
+
+  //*eğer enter=13 tuşuna basıldıysa
+  if (tuslar.keyCode === 13) {
+    document.querySelector(".ekle").click();
+  }
+
+  //*eğer delete =46 tuşuna basılırsa sil butonu tetiklensin--mac klavye ile calismaz
+  if (tuslar.keyCode === 46) {
+    document.querySelector(".sil").click();
+  }
 }
+//!listemin başına h1 tag i eklemek
+
+// HTML'de input-div'in altına yeni bir H1 elemanı olusturalım.
+const liste = document.querySelector(".liste"); //h1 eklemek için class=input-div yerine class=forH1 yapabilirsin
+// const h1 = document.createElement("h1");
+// const yazi = document.createTextNode("Programlama Dilleri");
+// h1.appendChild(yazi);
+// inputDiv.after(h1); //input-div'in sonrasina h1'i ekliyoruz.
+
+//!kısa yol
+
+liste.innerHTML = `<h1 class='h1js'> ${"Programlama Dilleri"}</h1>` +liste.innerHTML;
